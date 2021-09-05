@@ -61,7 +61,7 @@
 										<div class="row">
 											<div class="col-4 col-6-medium col-12-small">
 												<H3>Quality controll</H3><p></p>
-												<a href="#" class="image fit"><img src="images/Quality_control.png" alt=""></a>
+												<a href="#quality_control" class="image fit"><img src="images/Quality_control.png" alt=""></a>
 											</div>
 											<p></p>
 											<div class="col-4 col-6-medium col-12-small">
@@ -126,11 +126,61 @@
 								</section>
 							</article>
 
-						<!-- Contact
-							<article id="contact" class="panel">
+						<!-- Contact -->
+							<article id="quality_control" class="panel">
 								<header>
-									<h2>Contact Me</h2>
+									<h2>Quality Control</h2>
 								</header>
+								<div>
+									The following is an exemple of code to run a quality controll analises on fastq file.
+								</div>
+								<diz>
+									<pre class="prettyCode">
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -n 4
+#SBATCH --mem=20G
+#SBATCH --time=12:00:00
+#SBATCH --account=hld_prod
+#SBATCH -p gll_usr_prod
+#SBATCH -e fastqc_before.err
+#SBATCH -o fastqc_before.out
+#SBATCH -J fastQC
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=santo.dipr@gmail.com
+
+
+################# MODULE #################################################################
+module load profile/bioinf
+module load autoload fastqc/0.11.5
+
+################# PATH and VARIABLES #####################################################
+# working dir
+
+WORK_DIR="/gpfs/scratch/userexternal/sdiprima"
+
+INPUT_DIR=$WORK_DIR/"BOS_TAU/DATA"
+
+FASTQ_PRE_TRIMMING_OUTPUT_DIR=$WORK_DIR/"BOS_TAU/ANALYSES/FASTQC_BEFORE"
+
+#First QC
+echo "-------> FastQC"
+mkdir -p $FASTQ_PRE_TRIMMING_OUTPUT_DIR
+fastqc -t 4 -o $FASTQ_PRE_TRIMMING_OUTPUT_DIR $INPUT_DIR/Sample_*
+
+
+#nel std.err è dato dal comando fastqc e ci da anche un sunto degli step che sono stati fatti
+#stessa cosa per l'std.out è dato da fasqc
+
+
+#DATASET= /gpfs/work/hld_prod/gchillemi/RNAseq/BosTau
+#CINECA_SCRATCH = /gpfs/scratch/userexternal/sdiprima
+
+									</pre>
+
+								</diz>
+
+
 								<form action="#" method="post">
 									<div>
 										<div class="row">
@@ -155,7 +205,7 @@
 							</article>
 
 					</div>
--->
+
 				<!-- Footer -->
 					<div id="footer">
 						<ul class="copyright">
